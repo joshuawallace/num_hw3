@@ -11,7 +11,7 @@
 //prints this message if there aren't the right number of command line arguments
 void intromessage(char *name)
 {
-  printf("Usage: %s, timestep, number of steps\n",name);
+  printf("Usage: %s, number of steps\n",name);
   exit(0);
 }
 
@@ -30,7 +30,7 @@ int thefunction(int n, double t, const double *x, double *fx)
   const double omega=0.1;
   const double omega_n_squared=25.;
   fx[0]=x[1];
-  fx[1]=-omega_n_squared*x[0] + gamma*cos(omega*t);
+  fx[1]=-omega_n_squared*x[0] + cos(omega*t);
   return 0;
 }
 
@@ -47,11 +47,12 @@ int main(int argc, char **argv)
   const double x_prime_initial=0.;
 
   //make sure there were the right number of command line arguments
-  if(argc!=3) intromessage(argv[0]);
+  if(argc!=2) intromessage(argv[0]);
 
   //read in the command line arguments, give them variable names
-  const double h=atof(argv[1]);
-  const int    n_steps=atoi(argv[2]);
+  const double time_max=100.;
+  const int    n_steps=atoi(argv[1]);
+  const double h=time_max/atof(argv[1]);
 
   //The values x and y=x' in an array, the values as expressed in the function
   double x[n];
@@ -69,7 +70,7 @@ int main(int argc, char **argv)
   integrator_struct = integrator_new(n,h,thefunction);
 
   //print out the initial values
-  printf("%15.8f %15.8f %15.8f\n",0*h,x[0],x[1]);
+  //printf("%15.8f %15.8f %15.8f\n",0*h,x[0],x[1]);
 
   //print the results out in form: t x x'
   //each line a different timestep
