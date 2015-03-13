@@ -69,15 +69,19 @@ int main(int argc, char **argv)
   //allocated memory, start things up
   integrator_struct = integrator_new(n,h,thefunction);
 
+  //Keep track of time
+  double t=0.;
+
   //print out the initial values
-  //printf("%15.8f %15.8f %15.8f\n",0*h,x[0],x[1]);
+  printf("%15.8f %15.8f %15.8f\n",t,x[0],x[1]);
 
   //print the results out in form: t x x'
   //each line a different timestep
   for(i=0;i<n_steps;i++)
     {
-      assert(integrator_step(integrator_struct,i*h,x) ==0); //steps y, which is x'
-      printf("%15.8f %15.8f %15.8f\n",i*h,x[0],x[1]); //prints out the results
+      assert(integrator_step(integrator_struct,t,x) ==0); //steps y, which is x'
+      t+=h;
+      printf("%15.8f %15.8f %15.8f\n",t,x[0],x[1]); //prints out the results
     }
 
   //free the memory up for others to use
