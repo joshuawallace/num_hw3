@@ -20,4 +20,4 @@ oscillator_rk4: rk4.o oscillator.o
 	$(CC) $(CFLAGS) -o oscillator_rk4 oscillator.c rk4.c $(LIB)
 
 clean:
-	rm -rf *o oscillator_euler oscillator_euler_symplectic oscillator_rk4
+	rm -rf *.o oscillator_euler oscillator_euler_symplectic oscillator_rk4

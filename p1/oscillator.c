@@ -34,6 +34,13 @@ int thefunction(int n, double t, const double *x, double *fx)
   return 0;
 }
 
+double analyticfunction(double t)
+{
+  const double omega=0.1;
+  const double omega_n=5.;
+  return   (cos(omega*t) - cos(omega_n*t) ) / (omega_n * omega_n - omega * omega);
+}
+
 int main(int argc, char **argv)
 {
   //iteration counters
@@ -72,8 +79,8 @@ int main(int argc, char **argv)
   //Keep track of time
   double t=0.;
 
-  //print out the initial values
-  printf("%15.8f %15.8f %15.8f\n",t,x[0],x[1]);
+  //print out the initial error
+  printf("%15.8f\n",fabs(x[0]-analyticfunction(t)));
 
   //print the results out in form: t x x'
   //each line a different timestep
@@ -81,7 +88,7 @@ int main(int argc, char **argv)
     {
       assert(integrator_step(integrator_struct,t,x) ==0); //steps y, which is x'
       t+=h;
-      printf("%15.8f %15.8f %15.8f\n",t,x[0],x[1]); //prints out the results
+       printf("%15.8f\n",fabs(x[0]-analyticfunction(t))); //prints out error
     }
 
   //free the memory up for others to use
