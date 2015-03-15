@@ -8,7 +8,15 @@ for type in ('euler', 'euler_symplectic', 'rk4'):
         s = type + '.error.' + str(value) + '.out'
         error = np.loadtxt(s,unpack=True)
         labelstring = 'Nsteps = ' + str(value)
-        pp.plot(np.linspace(0.,100.,value+1),error,label=labelstring)
+        if type != 'euler_symplectic':
+            pp.plot(np.linspace(0.,100.,value+1),error,label=labelstring)
+        elif value == 10000:
+            pp.plot(np.linspace(0.,100.,value+1),error,label=labelstring,lw=4)
+        elif value == 1000:
+            pp.plot(np.linspace(0.,100.,value+1),error,label=labelstring,lw=8)
+        else:
+            pp.plot(np.linspace(0.,100.,value+1),error,label=labelstring)
+            
 
 
     pp.xlabel("t")

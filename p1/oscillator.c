@@ -80,7 +80,7 @@ int main(int argc, char **argv)
   double t=0.;
 
   //print out the initial error
-  printf("%15.8f\n",fabs(x[0]-analyticfunction(t)));
+  printf("%e\n",fabs(x[0]-analyticfunction(t)));
 
   //print the results out in form: t x x'
   //each line a different timestep
@@ -88,7 +88,7 @@ int main(int argc, char **argv)
     {
       assert(integrator_step(integrator_struct,t,x) ==0); //steps y, which is x'
       t+=h;
-       printf("%15.8f\n",fabs(x[0]-analyticfunction(t))); //prints out error
+       printf("%e\n",fabs(x[0]-analyticfunction(t))); //prints out error
     }
 
   //free the memory up for others to use
