@@ -6,8 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <sys/time.h>
-#include <time.h>
 #include "integrator.h"
 
 //prints this message if there aren't the right number of command line arguments
@@ -45,11 +43,6 @@ double analyticfunction(double t)
 
 int main(int argc, char **argv)
 {
-  clock_t begin; //Used for timing
-  begin = clock(); //Begin timing
-  struct timeval stop,start;
-  gettimeofday(&start,NULL);
-
   //iteration counters
   int i;
 
@@ -99,14 +92,6 @@ int main(int argc, char **argv)
       //printf("%e\n",fabs(x[0]-analyticfunction(t))); //prints out error
       printf("%e %e %e\n",t,x[0],x[1]); //prints out the results
     }
-  
-  printf("   Error: %e\n",fabs(x[0]-analyticfunction(t)));
-  //free the memory up for others to use
-  integrator_free(integrator_struct);
-
-  printf("   Time in seconds: %e\n", (double)(clock()-begin)/(double)(CLOCKS_PER_SEC)); //Print out how long the code took
-  gettimeofday(&stop,NULL);
-  printf("   took %lu\n",stop.tv_usec - start.tv_usec);
 
   return 0;
 }

@@ -1,0 +1,39 @@
+100000
+euler
+   Error: 8.834789e-02
+   Time in seconds: 1.000000e-02
+   took 10445
+euler_symplectic
+   Error: 5.657731e-05
+   Time in seconds: 0.000000e+00
+   took 8109
+rk4
+   Error: 5.897684e-11
+   Time in seconds: 2.000000e-02
+   took 25162
+10000
+euler
+   Error: 1.054512e+04
+   Time in seconds: 0.000000e+00
+   took 1261
+euler_symplectic
+   Error: 1.536059e-03
+   Time in seconds: 0.000000e+00
+   took 1607
+rk4
+   Error: 4.486462e-07
+   Time in seconds: 0.000000e+00
+   took 4687
+1000
+euler
+   Error: 2.963761e+46
+   Time in seconds: 0.000000e+00
+   took 256
+euler_symplectic
+   Error: 5.266691e-03
+   Time in seconds: 0.000000e+00
+   took 317
+rk4
+   Error: 4.580827e-04
+   Time in seconds: 0.000000e+00
+   took 607
