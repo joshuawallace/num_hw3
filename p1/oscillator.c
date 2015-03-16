@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <sys/time.h>
+#include <time.h>
 #include "integrator.h"
 
 //prints this message if there aren't the right number of command line arguments
@@ -43,6 +45,11 @@ double analyticfunction(double t)
 
 int main(int argc, char **argv)
 {
+  clock_t begin; //Used for timing
+  begin = clock(); //Begin timing
+  struct timeval stop,start;
+  gettimeofday(&start,NULL);
+
   //iteration counters
   int i;
 
@@ -57,7 +64,7 @@ int main(int argc, char **argv)
   if(argc!=2) intromessage(argv[0]);
 
   //read in the command line arguments, give them variable names
-  const double time_max=100.;
+  const double time_max=100000.;
   const int    n_steps=atoi(argv[1]);
   const double h=time_max/atof(argv[1]);
 
@@ -80,8 +87,8 @@ int main(int argc, char **argv)
   double t=0.;
 
   //print out the initial state
-  printf("%e\n",fabs(x[0]-analyticfunction(t)));  //prints out error
-  //printf("%e %e %e\n",t,x[0],x[1]); //prints out the results
+  //printf("%e\n",fabs(x[0]-analyticfunction(t)));  //prints out error
+  printf("%e %e %e\n",t,x[0],x[1]); //prints out the results
 
   //print the results out in form: t x x'
   //each line a different timestep
@@ -89,12 +96,17 @@ int main(int argc, char **argv)
     {
       assert(integrator_step(integrator_struct,t,x) ==0); //steps y, which is x'
       t+=h;
-      printf("%e\n",fabs(x[0]-analyticfunction(t))); //prints out error
-      //printf("%e %e %e\n",t,x[0],x[1]); //prints out the results
+      //printf("%e\n",fabs(x[0]-analyticfunction(t))); //prints out error
+      printf("%e %e %e\n",t,x[0],x[1]); //prints out the results
     }
-
+  
+  printf("   Error: %e\n",fabs(x[0]-analyticfunction(t)));
   //free the memory up for others to use
   integrator_free(integrator_struct);
+
+  printf("   Time in seconds: %e\n", (double)(clock()-begin)/(double)(CLOCKS_PER_SEC)); //Print out how long the code took
+  gettimeofday(&stop,NULL);
+  printf("   took %lu\n",stop.tv_usec - start.tv_usec);
 
   return 0;
 }
