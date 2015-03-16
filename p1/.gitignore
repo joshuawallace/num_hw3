@@ -1,5 +1,6 @@
 *.o
 *~
+*dSYM
 oscillator_euler
 oscillator_euler_symplectic
 oscillator_rk4

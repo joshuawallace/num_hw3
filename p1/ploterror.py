@@ -11,9 +11,9 @@ for type in ('euler', 'euler_symplectic', 'rk4'):
         if type != 'euler_symplectic':
             pp.plot(np.linspace(0.,100.,value+1),error,label=labelstring)
         elif value == 10000:
-            pp.plot(np.linspace(0.,100.,value+1),error,label=labelstring,lw=4)
+            pp.plot(np.linspace(0.,100.,value+1),error,label=labelstring)
         elif value == 1000:
-            pp.plot(np.linspace(0.,100.,value+1),error,label=labelstring,lw=8)
+            pp.plot(np.linspace(0.,100.,value+1),error,label=labelstring)
         else:
             pp.plot(np.linspace(0.,100.,value+1),error,label=labelstring)
             
