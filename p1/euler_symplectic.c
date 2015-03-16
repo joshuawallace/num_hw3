@@ -34,15 +34,21 @@ Integrator *integrator_new(int n_, double dt_, FuncPtr rhs_)
 //steps the integrator forward one step
 int integrator_step(Integrator *integrator, double t, double *x)
 {
-  if((*integrator).n == 2)
+  /*The symplectic Euler scheme is basically the same as the Euler scheme with two changes.
+   One is that x is implemented in a reverse order than before: x[1] before x[0].
+   The other change is that fx is evaluated between the calculation of x[1] and x[0].  This 
+   makes the algorithm semi-implicit and gives it its symplectic properties*/
+  if((*integrator).n == 2) //if we are integrating a second order ODE
     {
       assert((*integrator).rhs( (*integrator).n,t,x,(*integrator).fx)==0); //find fx and assert success
-      x[1] += (*integrator).dt * (*integrator).fx[1];
+      x[1] += (*integrator).dt * (*integrator).fx[1]; //Calculate x[1] = x'(t)
       
       assert((*integrator).rhs( (*integrator).n,t,x,(*integrator).fx)==0); //find fx and assert success
-      x[0] += (*integrator).dt * (*integrator).fx[0];
+      x[0] += (*integrator).dt * (*integrator).fx[0]; //Calculate x[0] = x(t) but with f[0] already advanced a 
+                                               //timestep based on x[1], making it an implicit calculation
     }
-  else
+
+  else //We are not integrating a second order ODE, so let user know
     {
       printf("Didn't recognize dimension size given to symplectic_euler integrator\n");
       return 1;
