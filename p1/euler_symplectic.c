@@ -34,13 +34,20 @@ Integrator *integrator_new(int n_, double dt_, FuncPtr rhs_)
 //steps the integrator forward one step
 int integrator_step(Integrator *integrator, double t, double *x)
 {
-  
-  assert((*integrator).rhs( (*integrator).n,t,x,(*integrator).fx)==0); //find fx and assert success
-  
-  for(int i=(*integrator).n-1;i>=0;i++)  //Reversed index order to make symplectic
+  if((*integrator).n == 2)
     {
-      x[i] = x[i] + (*integrator).dt * (*integrator).fx[i];//Use Euler algorithm to step x
+      assert((*integrator).rhs( (*integrator).n,t,x,(*integrator).fx)==0); //find fx and assert success
+      x[1] += (*integrator).dt * (*integrator).fx[1];
+      
+      assert((*integrator).rhs( (*integrator).n,t,x,(*integrator).fx)==0); //find fx and assert success
+      x[0] += (*integrator).dt * (*integrator).fx[0];
     }
+  else
+    {
+      printf("Didn't recognize dimension size given to symplectic_euler integrator\n");
+      return 1;
+    }
+ 
   return 0;
 }
 
