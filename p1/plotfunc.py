@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as pp
 
 omega = .1
-omega_n = 25
+omega_n = 5
 def analytic(t):
     return (np.cos(omega*t) - np.cos(omega_n*t) ) / (omega_n * omega_n - omega * omega)
 
@@ -41,10 +41,11 @@ for value in num:
         t,x,xprime = np.loadtxt(s,unpack=True)
         pp.plot(t,x,label=type)
 
-
-    pp.plot(np.linspace(0.,100.,1000),analytic(np.linspace(0.,100.,1000)),label="True")
+    pp.plot(np.linspace(0.,100.,100000),analytic(np.linspace(0.,100.,100000)),label="True")
     pp.xlabel("t")
     pp.ylabel("f(x)")
+    #pp.xlim(0,20)
+    pp.ylim(-0.12,0.12)
     pp.legend(loc='best')
     titlestring = 'Nsteps = ' + str(value)
     pp.title(titlestring)
@@ -52,8 +53,10 @@ for value in num:
     pp.savefig(s)
     pp.close()
 
-pp.plot(np.linspace(0.,100.,1000),analytic(np.linspace(0.,100.,1000)),label="True")
+ntemp=1000000
+pp.plot(np.linspace(0.,100.,ntemp),analytic(np.linspace(0.,100.,ntemp)),label="True")
 pp.xlabel("t")
+pp.xlim(0,20)
 pp.ylabel("true f(x)")
 pp.title("True")
 s = 'pdf/true_plot.pdf'

@@ -37,7 +37,7 @@ int integrator_step(Integrator *integrator, double t, double *x)
   
   assert((*integrator).rhs( (*integrator).n,t,x,(*integrator).fx)==0); //find fx and assert success
   
-  for(int i=(*integrator).n-1;i>=(*integrator).n;i++)  //Reversed index order to make symplectic
+  for(int i=(*integrator).n-1;i>=0;i++)  //Reversed index order to make symplectic
     {
       x[i] = x[i] + (*integrator).dt * (*integrator).fx[i];//Use Euler algorithm to step x
     }
